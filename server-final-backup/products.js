@@ -1,0 +1,50 @@
+const products = [
+  {
+    id: 'shoe-001',
+    name: 'Skechers Go Run',
+    category: 'running shoes',
+    brand: 'Skechers',
+    audience: ['beginner'],
+    purpose: ['running', 'walking'],
+    features: ['comfortable', 'lightweight', 'cushioned'],
+    price: 2499,
+    currency: 'INR',
+  },
+  {
+    id: 'shoe-002',
+    name: 'Adidas Runfalcon',
+    category: 'running shoes',
+    brand: 'Adidas',
+    audience: ['beginner'],
+    purpose: ['running', 'walking'],
+    features: ['comfortable', 'lightweight', 'supportive'],
+    price: 2999,
+    currency: 'INR',
+  },
+  {
+    id: 'shoe-003',
+    name: 'Nike Revolution',
+    category: 'running shoes',
+    brand: 'Nike',
+    audience: ['beginner', 'intermediate'],
+    purpose: ['running', 'training'],
+    features: ['comfortable', 'lightweight', 'breathable'],
+    price: 3499,
+    currency: 'INR',
+  },
+  {
+    id: 'shoe-004',
+    name: 'Puma Softride',
+    category: 'running shoes',
+    brand: 'Puma',
+    audience: ['beginner'],
+    purpose: ['running', 'walking'],
+    features: ['soft', 'comfortable', 'cushioned'],
+    price: 2799,
+    currency: 'INR',
+  },
+];
+
+module.exports = {
+  products,
+};

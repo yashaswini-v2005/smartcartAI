@@ -1,0 +1,178 @@
+function getLocalIntent(query) {
+  const text = query.toLowerCase();
+
+  const intent = {
+    product: '',
+    category: '',
+    audience: '',
+    purpose: '',
+    preferences: [],
+    constraints: [],
+    brand: '',
+    maxPrice: null,
+    minPrice: null,
+  };
+
+  // -------------------------
+  // PRODUCT / CATEGORY
+  // -------------------------
+
+  if (
+    text.includes('running shoe') ||
+    text.includes('running shoes') ||
+    text.includes('jogging shoe') ||
+    text.includes('jogging shoes') ||
+    text.includes('footwear') ||
+    text.includes('5k') ||
+    text.includes('5 k')
+  ) {
+    intent.product = 'running shoes';
+    intent.category = 'running shoes';
+  }
+
+  // -------------------------
+  // AUDIENCE
+  // -------------------------
+
+  if (
+    text.includes('beginner') ||
+    text.includes('new runner') ||
+    text.includes('first time') ||
+    text.includes('new to running')
+  ) {
+    intent.audience = 'beginner';
+  } else if (text.includes('intermediate')) {
+    intent.audience = 'intermediate';
+  } else if (
+    text.includes('runner') ||
+    text.includes('running')
+  ) {
+    intent.audience = 'runner';
+  }
+
+  // -------------------------
+  // PURPOSE
+  // -------------------------
+
+  if (
+    text.includes('running') ||
+    text.includes('jogging') ||
+    text.includes('run') ||
+    text.includes('5k') ||
+    text.includes('5 k')
+  ) {
+    intent.purpose = 'running';
+  } else if (
+    text.includes('walking') ||
+    text.includes('walk')
+  ) {
+    intent.purpose = 'walking';
+  } else if (
+    text.includes('training') ||
+    text.includes('workout')
+  ) {
+    intent.purpose = 'training';
+  }
+
+  // -------------------------
+  // PREFERENCES
+  // -------------------------
+
+  const possiblePreferences = [
+    'comfortable',
+    'lightweight',
+    'cushioned',
+    'supportive',
+    'breathable',
+    'soft',
+    'impact protection',
+    'impact reduction',
+    'shock absorption',
+    'shock absorbing',
+  ];
+
+  for (const preference of possiblePreferences) {
+    if (text.includes(preference)) {
+      intent.preferences.push(preference);
+    }
+  }
+
+  // "reduces impact" / "reduce impact"
+  if (
+    text.includes('reduces impact') ||
+    text.includes('reduce impact') ||
+    text.includes('less impact')
+  ) {
+    if (!intent.preferences.includes('impact reduction')) {
+      intent.preferences.push('impact reduction');
+    }
+  }
+
+  // -------------------------
+  // BRANDS
+  // -------------------------
+
+  const brands = [
+    'nike',
+    'adidas',
+    'puma',
+    'skechers',
+  ];
+
+  for (const brand of brands) {
+    if (text.includes(brand)) {
+      intent.brand = brand;
+      break;
+    }
+  }
+
+  // -------------------------
+  // PRICE
+  // -------------------------
+
+  const underPriceMatch = text.match(
+    /(?:under|below|less than|within)\s*(?:₹|rs\.?|inr)?\s*([\d,]+)/i
+  );
+
+  if (underPriceMatch) {
+    intent.maxPrice = Number(
+      underPriceMatch[1].replace(/,/g, '')
+    );
+
+    intent.constraints.push(
+      `under ${intent.maxPrice}`
+    );
+  }
+
+  const overPriceMatch = text.match(
+    /(?:over|above|more than)\s*(?:₹|rs\.?|inr)?\s*([\d,]+)/i
+  );
+
+  if (overPriceMatch) {
+    intent.minPrice = Number(
+      overPriceMatch[1].replace(/,/g, '')
+    );
+
+    intent.constraints.push(
+      `over ${intent.minPrice}`
+    );
+  }
+
+  // -------------------------
+  // CHECK WHETHER LOCAL
+  // DETECTION FOUND SOMETHING
+  // -------------------------
+
+  const hasUsefulIntent =
+    intent.product ||
+    intent.category ||
+    intent.audience ||
+    intent.purpose ||
+    intent.preferences.length > 0 ||
+    intent.constraints.length > 0 ||
+    intent.brand ||
+    intent.maxPrice !== null ||
+    intent.minPrice !== null;
+
+  return hasUsefulIntent ? intent : null;
+}
