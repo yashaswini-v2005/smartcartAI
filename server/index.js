@@ -8,7 +8,13 @@ const { products } = require('./products');
 const { findMatchingProducts } = require('./matcher');
 
 const app = express();
-const PORT = 3000;
+
+// Use Render's port when deployed.
+// Use 3000 when running locally.
+const PORT = process.env.PORT || 3000;
+
+// Listen on all network interfaces so cloud hosting can access the server.
+const HOST = '0.0.0.0';
 
 // --------------------------------------------------
 // GEMINI
@@ -54,14 +60,13 @@ app.get('/search-test', (req, res) => {
 // --------------------------------------------------
 // LOCAL INTENT DETECTION
 // --------------------------------------------------
-//
+
 // Simple/common shopping queries are handled locally.
 // This makes searches extremely fast and avoids the
 // 3-10 second Gemini delay.
 //
 // Gemini is used only when local detection cannot
 // understand the query.
-// --------------------------------------------------
 
 function getLocalIntent(query) {
   const text = String(query || '').toLowerCase();
@@ -234,21 +239,6 @@ function getLocalIntent(query) {
 
   // ------------------------------------------------
   // PRICE: UNDER / BELOW / LESS THAN / WITHIN
-  // ------------------------------------------------
-  //
-  // Important:
-  // We intentionally allow any non-digit character
-  // between "under" and the number.
-  //
-  // This handles:
-  // ₹3000
-  // Rs 3000
-  // INR 3000
-  // ?3000
-  // etc.
-  //
-  // This also avoids the Windows PowerShell ₹ encoding
-  // problem you encountered.
   // ------------------------------------------------
 
   const underPriceMatch = text.match(
@@ -466,8 +456,8 @@ app.post('/search', async (req, res) => {
 // START SERVER
 // --------------------------------------------------
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(
-    `SmartCart AI server running on http://localhost:${PORT}`
+    `SmartCart AI server running on port ${PORT}`
   );
 });
