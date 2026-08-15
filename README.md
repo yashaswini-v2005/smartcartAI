@@ -382,6 +382,6 @@ Possible future improvements include:
 
 ## Author
 
-**Yashaswini Vishwanath**
+**Yashaswini **
 
 SmartCart AI — Conversational Product Search Application
