@@ -1,50 +1,387 @@
-# Welcome to your Expo app 👋
+# SmartCart AI 🛒🤖
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+SmartCart AI is a React Native mobile eCommerce application that provides **conversational product search** using natural-language queries.
 
-## Get started
+Instead of requiring users to select multiple filters, they can simply describe what they are looking for, for example:
 
-1. Install dependencies
+> "Show me running shoes under ₹5,000 suitable for beginners."
 
-   ```bash
-   npm install
-   ```
+The application uses AI to understand the user's intent, matches that intent against a sample product dataset, and explains why each recommended product matches the request.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## Features
 
-In the output, you'll find options to open the app in a
+* 🔎 Natural-language product search
+* 🤖 AI-powered intent understanding
+* 🛍️ Product recommendations from a sample dataset
+* 🎯 Match scoring for recommended products
+* 💡 Explanations showing why a product matches
+* 💰 Price constraint handling
+* 👟 Product images and product information
+* 📱 React Native mobile interface
+* ☁️ Deployed backend API
+* ✨ Clean and intuitive user interface
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Example Query
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+Show me running shoes under ₹5,000 suitable for beginners.
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+SmartCart AI interprets the request and identifies information such as:
 
-## Learn more
+* Product category: running shoes
+* Audience: beginner
+* Purpose: running
+* Price constraint: under ₹5,000
 
-To learn more about developing your project with Expo, look at the following resources:
+The application then ranks suitable products and displays the reasons for each recommendation.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## How It Works
 
-Join our community of developers creating universal apps.
+The application follows a simple conversational search pipeline:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```text
+User enters a natural-language query
+            ↓
+      Mobile React Native App
+            ↓
+        Backend API
+            ↓
+       AI Intent Analysis
+            ↓
+     Structured Search Intent
+            ↓
+       Product Matcher
+            ↓
+   Match Score + Match Reasons
+            ↓
+      Recommended Products
+```
+
+### 1. User Query
+
+The user enters a natural-language request in the mobile application.
+
+Example:
+
+```text
+comfortable running shoes for beginner
+```
+
+### 2. Intent Understanding
+
+The backend processes the query and extracts structured information such as:
+
+* Product
+* Audience
+* Purpose
+* Preferences
+* Constraints
+
+### 3. Product Matching
+
+The structured intent is compared against the available products.
+
+The matcher considers:
+
+* Product category
+* Intended audience
+* Product purpose
+* Brand
+* Product features
+* Price constraints
+
+### 4. Match Scoring
+
+Products receive a match score based on how many requested characteristics they satisfy.
+
+### 5. Explanation
+
+The application displays matching reasons so that users can understand why a product was recommended.
+
+For example:
+
+```text
+✓ Suitable for beginner
+✓ Good for running
+✓ Has comfortable feature
+✓ Has lightweight feature
+✓ Within ₹5,000
+```
+
+---
+
+## Project Structure
+
+```text
+SmartCartAI/
+│
+├── app/
+│   ├── (tabs)/
+│   │   └── index.tsx
+│   └── product.tsx
+│
+├── assets/
+│   └── products/
+│
+├── components/
+│
+├── constants/
+│
+├── data/
+│
+├── hooks/
+│
+├── server/
+│   ├── index.js
+│   ├── intent.js
+│   ├── matcher.js
+│   └── products.js
+│
+├── types/
+│
+├── app.json
+├── eas.json
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+---
+
+## Technologies Used
+
+### Mobile Application
+
+* React Native
+* Expo
+* Expo Router
+* TypeScript
+
+### Backend
+
+* Node.js
+* Express.js
+
+### AI
+
+* Google Gemini API for natural-language intent understanding
+
+### Deployment
+
+* Render for backend deployment
+* Expo Application Services (EAS) for Android builds
+
+---
+
+## Sample Product Dataset
+
+The current application uses a sample dataset of running shoes.
+
+Example products include:
+
+* Skechers Go Run
+* Adidas Runfalcon
+* Nike Revolution
+* Puma Softride
+
+Each product contains information such as:
+
+```text
+Product name
+Brand
+Category
+Audience
+Purpose
+Features
+Price
+Currency
+```
+
+This dataset allows the conversational search system to demonstrate product discovery and recommendation without requiring a production database.
+
+---
+
+## Installation
+
+### Prerequisites
+
+Make sure the following are installed:
+
+* Node.js
+* npm
+* Expo CLI / Expo tooling
+* Android device or Android emulator
+
+### Install the mobile application dependencies
+
+Clone the repository:
+
+```bash
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+```
+
+Navigate into the project:
+
+```bash
+cd SmartCartAI
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the Expo development server:
+
+```bash
+npx expo start
+```
+
+The application can then be opened using an Android device, emulator, or supported Expo development environment.
+
+---
+
+## Backend Setup
+
+Navigate to the server directory:
+
+```bash
+cd server
+```
+
+Install backend dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file inside the `server` directory.
+
+Add the required Gemini API key:
+
+```env
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+```
+
+Do not commit the `.env` file or API keys to GitHub.
+
+Start the backend server using the project's configured server command.
+
+---
+
+## API
+
+The mobile application communicates with the backend through the search endpoint:
+
+```text
+POST /search
+```
+
+Example request:
+
+```json
+{
+  "query": "Show me running shoes under ₹5,000 suitable for beginners."
+}
+```
+
+The backend processes the request and returns the recommended products together with their match information.
+
+---
+
+## Environment Variables
+
+The backend requires:
+
+```text
+GEMINI_API_KEY
+```
+
+API keys and other secrets should be stored in environment variables and should **never be committed to the repository**.
+
+---
+
+## Third-Party Services and Libraries
+
+This project uses the following third-party technologies:
+
+* **React Native** — mobile application framework
+* **Expo** — React Native development and build platform
+* **Expo Router** — file-based navigation
+* **Node.js** — backend runtime
+* **Express.js** — backend API framework
+* **Google Gemini API** — natural-language intent understanding
+* **Render** — backend hosting
+* **Expo Application Services (EAS)** — Android application builds
+
+---
+
+## Backend Deployment
+
+The backend is deployed using Render.
+
+The mobile application communicates with the deployed backend rather than relying on a local development IP address.
+
+---
+
+## Android Build
+
+The Android application can be built using Expo Application Services:
+
+```bash
+eas build --platform android --profile preview
+```
+
+The generated Android application can then be installed on a compatible Android device.
+
+---
+
+## Assessment Requirements
+
+This project was developed for the **Conversational Search for an eCommerce Application** technical assessment.
+
+The implementation addresses the requested requirements:
+
+| Requirement              | Implementation                                            |
+| ------------------------ | --------------------------------------------------------- |
+| React Native             | Expo + React Native                                       |
+| Natural-language search  | Conversational search input                               |
+| AI intent understanding  | Gemini-powered intent extraction                          |
+| Sample products          | Local product dataset                                     |
+| Relevant recommendations | Intent-based product matching                             |
+| Explain recommendations  | Match reasons displayed for products                      |
+| Clean user experience    | Custom mobile UI                                          |
+| Scalable architecture    | Separate mobile, backend, intent, matcher and data layers |
+| README                   | Project setup and implementation documentation            |
+| Third-party services     | Documented above                                          |
+
+---
+
+## Future Improvements
+
+Possible future improvements include:
+
+* Connecting to a larger product database
+* Adding category and brand filters
+* Supporting product availability and stock
+* Adding shopping cart functionality
+* Adding user accounts and saved searches
+* Personalizing recommendations based on previous searches
+* Adding more product categories
+* Improving ranking with additional recommendation signals
+
+---
+
+## Author
+
+**Yashaswini Vishwanath**
+
+SmartCart AI — Conversational Product Search Application
